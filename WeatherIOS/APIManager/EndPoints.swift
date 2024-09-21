@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+enum EndPoints: String {
+    
+    case weather       = "weather"
+    case forecast      = "forecast"
+}
