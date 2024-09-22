@@ -2,7 +2,7 @@
 //  DBForecast+CoreDataProperties.swift
 //  WeatherIOS
 //
-//  Created by Janaina A on 21/09/2024.
+//  Created by Janaina A on 22/09/2024.
 //
 //
 
@@ -18,6 +18,7 @@ extension DBForecast {
 
     @NSManaged public var id: Int64
     @NSManaged public var isHome: Bool
+    @NSManaged public var timezone: Int64
     @NSManaged public var forecasts: NSSet?
 
 }

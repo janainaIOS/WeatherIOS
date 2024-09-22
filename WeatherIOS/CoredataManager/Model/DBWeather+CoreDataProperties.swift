@@ -2,7 +2,7 @@
 //  DBWeather+CoreDataProperties.swift
 //  WeatherIOS
 //
-//  Created by Janaina A on 21/09/2024.
+//  Created by Janaina A on 22/09/2024.
 //
 //
 
@@ -23,6 +23,7 @@ extension DBWeather {
     @NSManaged public var descriptnMain: String?
     @NSManaged public var humidity: Double
     @NSManaged public var id: Int64
+    @NSManaged public var isHome: Bool
     @NSManaged public var latitude: Double
     @NSManaged public var longitude: Double
     @NSManaged public var maxTemp: Double
@@ -32,8 +33,6 @@ extension DBWeather {
     @NSManaged public var sunset: Double
     @NSManaged public var temp: Double
     @NSManaged public var windSpeed: Double
-    @NSManaged public var isHome: Bool
-    @NSManaged public var forecast: DBForecast?
 
 }
 

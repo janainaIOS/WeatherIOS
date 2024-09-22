@@ -119,6 +119,7 @@ extension SearchLocationtVC: UITableViewDataSource {
 
 extension SearchLocationtVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchTextField.endEditing(true)
         ///get weather details using location name
         let address = locationArray[indexPath.row]
         self.getWeatherWithLocationName(address: address)

@@ -28,6 +28,7 @@ struct Weather: Codable {
         case dateTime = "dt_txt"
     }
     
+    init () {}
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try (container.decodeIfPresent(Int.self, forKey: .id) ?? 0)
@@ -54,26 +55,16 @@ struct LocCordinate: Codable {
 }
 
 struct Temparature: Codable {
-    var temp: Double = 0
-    var minTemp: Double = 0
-    var maxTemp: Double = 0
-    var humidity: Double = 0
-    var pressure: Double = 0
+    var temp: Double?
+    var minTemp: Double?
+    var maxTemp: Double?
+    var humidity: Double?
+    var pressure: Double?
     
     enum CodingKeys: String, CodingKey {
         case temp, humidity, pressure
         case minTemp = "temp_min"
         case maxTemp = "temp_max"
-    }
-    
-    init () {}
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        temp = try (container.decodeIfPresent(Double.self, forKey: .temp) ?? 0)
-        minTemp = try (container.decodeIfPresent(Double.self, forKey: .minTemp) ?? 0)
-        maxTemp = try (container.decodeIfPresent(Double.self, forKey: .maxTemp) ?? 0)
-        humidity = try (container.decodeIfPresent(Double.self, forKey: .minTemp) ?? 0)
-        pressure = try (container.decodeIfPresent(Double.self, forKey: .pressure) ?? 0)
     }
 }
 

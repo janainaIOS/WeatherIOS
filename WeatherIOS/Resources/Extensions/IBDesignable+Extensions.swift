@@ -54,16 +54,25 @@ import UIKit
         super.layoutSubviews()
         (layer as! CAGradientLayer).colors = [topColor.cgColor, bottomColor.cgColor]
         (layer as! CAGradientLayer).startPoint = CGPoint(x: 0.5, y: 0.0)
-        (layer as! CAGradientLayer).endPoint = CGPoint(x: 0.5, y: 1.0)
-        /*
-         startPoint = CGPoint(x: 0.25, y: 0.5) endPoint = CGPoint(x: 0.75, y: 0.5) - left (50%)to right
-         startPoint = CGPoint(x: 0.0, y: 0.0) endPoint = CGPoint(x: 1.0, y: 1.0) - top(75%) to bottom
-         startPoint = CGPoint(x: 0.5, y: 0.0) endPoint = CGPoint(x: 0.5, y: 1.0) - top(60%) to bottom
-         startPoint = CGPoint(x: 0.3, y: 0.0) endPoint = CGPoint(x: 0.3, y: 0.8) - top(50%) to bottom
-         */
+        (layer as! CAGradientLayer).endPoint = CGPoint(x: 1.0, y: 1.0)
     }
 }
 
+@IBDesignable class GradientView2: UIView {
+    @IBInspectable var topColor: UIColor = UIColor.white
+    @IBInspectable var bottomColor: UIColor = UIColor.black
+    
+    override class var layerClass: AnyClass {
+        return CAGradientLayer.self
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        (layer as! CAGradientLayer).colors = [topColor.cgColor, bottomColor.cgColor]
+        (layer as! CAGradientLayer).startPoint = CGPoint(x: 0.25, y: 0.5)
+        (layer as! CAGradientLayer).endPoint = CGPoint(x: 0.45, y: 0.5)
+    }
+}
 @IBDesignable extension UITableView {
     @IBInspectable
     var isEmptyRowsHidden: Bool {
@@ -136,8 +145,8 @@ extension UILabel {
             
             if newValue {
                 
-                self.layer.shadowColor = UIColor.black.cgColor
-                self.layer.shadowRadius = 2.0
+                self.layer.shadowColor = UIColor.darkGray.cgColor
+                self.layer.shadowRadius = 1.5
                 self.layer.shadowOpacity = 1.0
                 self.layer.shadowOffset = CGSize(width: 2, height: 2)
                 self.layer.masksToBounds = false

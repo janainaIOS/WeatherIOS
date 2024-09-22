@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,7 +15,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        //initial configuration
+        configure()
         return true
+    }
+    
+    func configure() {
+        //Keyboard
+        IQKeyboardManager.shared.toolbarConfiguration.placeholderConfiguration.color = .clear
+        let buttonConfig = IQBarButtonItemConfiguration(title: "Done")
+        IQKeyboardManager.shared.toolbarConfiguration.doneBarButtonConfiguration = buttonConfig
+        IQKeyboardManager.shared.enable = true
     }
 
     // MARK: UISceneSession Lifecycle

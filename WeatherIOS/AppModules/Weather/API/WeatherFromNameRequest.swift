@@ -10,7 +10,7 @@ import Alamofire
 
 /// Get weather details using location name
 /// pass name of location, APIKey
-/// For temperature in Celsius and maximum wind speed in meter/sec, units=metric
+/// units -> metric, For temperature in Celsius and maximum wind speed in meter/sec
 struct WeatherFromNameRequest: Encodable {
     var location: String
 }

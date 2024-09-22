@@ -63,10 +63,11 @@ class CoredataManager {
     
     /// Fetch all forecast items from the database
     /// - Returns: An array of `DBForecast` objects, or nil if an error occurs
-    func fetchAllForecasts() -> [DBForecast]? {
+    func fetchAllForecasts(completion:@escaping ([DBForecast]?) -> Void) {
         guard let context = mainManagedObjectContext else {
             print("Unable to access the managed object context.")
-            return nil
+            completion(nil)
+            return
         }
         
         let fetchRequest: NSFetchRequest<DBForecast> = DBForecast.fetchRequest()
@@ -74,10 +75,10 @@ class CoredataManager {
         do {
             let results = try context.fetch(fetchRequest)
             print("Fetched \(results.count) forecast items.")
-            return results
+            completion(results)
         } catch {
             print("Failed to fetch forecasts: \(error.localizedDescription)")
-            return nil
+            completion(nil)
         }
     }
     
@@ -136,7 +137,7 @@ class CoredataManager {
         
         // Check if forecast already exists using city ID
         let fetchRequest: NSFetchRequest<DBForecast> = DBForecast.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %lld", forecast.city?.id ?? 0)
+        fetchRequest.predicate = NSPredicate(format: "id == %lld", forecast.city.id)
         
         do {
             let results = try context.fetch(fetchRequest)
@@ -146,27 +147,34 @@ class CoredataManager {
                 // Update the existing forecast
                 print("Updating existing forecast with id \(existingForecast.id).")
                 dbForecast = existingForecast
+                
+                // Delete existing weather data linked to the forecast
+                           if let existingWeathers = existingForecast.forecasts as? Set<DBWeather> {
+                               for weather in existingWeathers {
+                                   context.delete(weather)
+                               }
+                           }
             } else {
                 // Create a new forecast entry
-                print("Creating new forecast for city id \(forecast.city?.id ?? 0).")
+                print("Creating new forecast for city id \(forecast.city.id).")
                 guard let entity = NSEntityDescription.entity(forEntityName: "DBForecast", in: context) else {
                     completion(false)
                     return
                 }
                 dbForecast = DBForecast(entity: entity, insertInto: context)
-                dbForecast.id = Int64(forecast.city?.id ?? 0)
+                dbForecast.id = Int64(forecast.city.id)
+                dbForecast.isHome = forecast.isHome
+                dbForecast.timezone = Int64(forecast.city.timezone)
             }
             
             // Update or add related weather data
-            if let weatherList = forecast.list {
                 let weatherSet = NSMutableSet()
-                for weather in weatherList {
+                for weather in forecast.list {
                     if let dbWeather = insertOrUpdateWeather(forecast: forecast, weather: weather) {
                         weatherSet.add(dbWeather)
                     }
                 }
                 dbForecast.forecasts = weatherSet
-            }
             
             // Save the context
             completion(saveMainContext())
@@ -196,6 +204,7 @@ class CoredataManager {
                 // If the weather exists, update it
                 print("Updating existing weather data for id \(weather.id).")
                 dbWeather = existingWeather
+                
             } else {
                 // If the weather doesn't exist, create a new one
                 print("Creating new weather data for id \(weather.id).")
@@ -206,22 +215,22 @@ class CoredataManager {
             }
             
             // Update or set the values
-            dbWeather.id            = Int64(forecast.city?.id ?? 0)
+            dbWeather.id            = Int64(forecast.city.id)
             dbWeather.isHome        = forecast.isHome
-            dbWeather.cityName      = forecast.city?.name
+            dbWeather.cityName      = forecast.city.name
             dbWeather.date          = weather.dateTime
             dbWeather.descriptn     = weather.descriptn.first?.description
             dbWeather.descriptnMain = weather.descriptn.first?.main
-            dbWeather.latitude      = forecast.city?.coord?.latitude ?? 0
-            dbWeather.longitude     = forecast.city?.coord?.longitude ?? 0
+            dbWeather.latitude      = forecast.city.coord?.latitude ?? 0
+            dbWeather.longitude     = forecast.city.coord?.longitude ?? 0
             dbWeather.temp          = weather.temparature?.temp ?? 0
             dbWeather.maxTemp       = weather.temparature?.maxTemp ?? 0
             dbWeather.minTemp       = weather.temparature?.minTemp ?? 0
             dbWeather.windSpeed     = weather.wind?.speed ?? 0
             dbWeather.humidity      = weather.temparature?.humidity ?? 0
             dbWeather.pressure      = weather.temparature?.pressure ?? 0
-            dbWeather.sunset        = forecast.city?.sunset ?? 0
-            dbWeather.sunrise       = forecast.city?.sunrise ?? 0
+            dbWeather.sunset        = forecast.city.sunset 
+            dbWeather.sunrise       = forecast.city.sunrise 
             dbWeather.createdDate   = Date()
             
             return dbWeather

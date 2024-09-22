@@ -2,7 +2,7 @@
 //  DBForecast+CoreDataClass.swift
 //  WeatherIOS
 //
-//  Created by Janaina A on 21/09/2024.
+//  Created by Janaina A on 22/09/2024.
 //
 //
 
