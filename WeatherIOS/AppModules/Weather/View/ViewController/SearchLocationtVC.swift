@@ -28,6 +28,11 @@ class SearchLocationtVC: UIViewController {
         configure()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        configureView()
+    }
+    
     /// Initial settings
     private func configure() {
         searchTextField.becomeFirstResponder()
@@ -35,6 +40,11 @@ class SearchLocationtVC: UIViewController {
         listTableView?.separatorInset = .zero
         listTableView?.layoutMargins = .zero
         searchCompleter.delegate = self
+    }
+    
+    /// Initial view settings
+    private func configureView() {
+        searchTextField.placeHolderColor = .lightGray
     }
     
     /// API call for weather details using location coordinates
@@ -153,5 +163,9 @@ extension SearchLocationtVC: UITextFieldDelegate {
         locationArray.removeAll()
         listTableView.reloadData()
         return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
     }
 }

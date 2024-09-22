@@ -14,6 +14,7 @@ extension String {
     func formatDate(inputFormat: dateFormat, outputFormat: dateFormat, today: Bool = false)-> String {
         let dateFormatterGet = DateFormatter()
         dateFormatterGet.dateFormat = inputFormat.rawValue
+        
         let dateFormatterPrint = DateFormatter()
         dateFormatterPrint.dateFormat = outputFormat.rawValue
         

@@ -20,13 +20,21 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_morning" translatesAutoresizingMaskIntoConstraints="NO" id="BOt-UM-w6f">
                                 <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WeatherIOS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gli-DB-nwr">
+                                <rect key="frame" x="115.66666666666669" y="407.66666666666669" width="162" height="37"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="31"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="base1"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="BOt-UM-w6f" secondAttribute="trailing" id="FwS-VZ-lJC"/>
+                            <constraint firstItem="Gli-DB-nwr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Ugi-po-QI7"/>
                             <constraint firstItem="BOt-UM-w6f" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="VaC-jf-UyK"/>
                             <constraint firstItem="BOt-UM-w6f" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="cJ6-KP-b9N"/>
+                            <constraint firstItem="Gli-DB-nwr" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="peo-od-d26"/>
                             <constraint firstAttribute="bottom" secondItem="BOt-UM-w6f" secondAttribute="bottom" id="qzx-pC-mm0"/>
                         </constraints>
                     </view>
@@ -39,7 +47,7 @@
     <resources>
         <image name="bg_morning" width="1284" height="2778"/>
         <namedColor name="base1">
-            <color red="0.63921568627450975" green="0.77647058823529413" blue="0.88235294117647056" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.3843137254901961" green="0.44313725490196076" blue="0.61960784313725492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
     </resources>
 </document>

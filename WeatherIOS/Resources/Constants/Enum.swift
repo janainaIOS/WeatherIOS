@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: - Date and Time
+/// Date and Time formats
 enum dateFormat: String {
     case yyyyMMddHHmmss       = "yyyy-MM-dd HH:mm:ss"  // 2023-04-30 16:00:00
     case yyyyMMdd             = "yyyy-MM-dd"
@@ -64,4 +64,11 @@ enum WeatherCondition: String {
             return "tornado"                   // 🌪️ Tornado
         }
     }
+}
+
+/// Enum representing temparature units
+enum Unit: String, CaseIterable {
+    case metric = "Celsius (°C)"
+    case imperial = "Fahrenheit (°F)"
+    
 }

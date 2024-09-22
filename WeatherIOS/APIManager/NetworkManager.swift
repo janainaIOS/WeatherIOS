@@ -20,17 +20,6 @@ public struct NetworkManager {
         if Connectivity.isConnectedToInternet() {
             print("[Request] :==> \(request.httpMethod.rawValue)  \(request.url)")
             
-            //print
-            if let parameters = parameters {
-                do {
-                    let encodedParameters = try JSONEncoder().encode(parameters)
-                    let json = try JSONSerialization.jsonObject(with: encodedParameters, options: []) as! [String: Any]
-                    print("[Parameters] :==> \(json)")
-                } catch {
-                    print("Error encoding parameters: \(error)")
-                }
-            }
-            
             AF.request(
                 request.url,
                 method: request.httpMethod,
@@ -40,14 +29,6 @@ public struct NetworkManager {
             )
             .validate(statusCode: 200...407)
             .responseDecodable(of: U.self) { response in
-               
-                //print
-                if let responseData = response.data {
-                    let _response = try? JSONSerialization.jsonObject(with: responseData, options: [])
-                    let responseDictionary = _response as? [String: Any]
-                    print("[Response] :==> \(_response)")
-                }
-                
                
                 
                 switch response.result {

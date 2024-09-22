@@ -25,8 +25,19 @@ extension UserDefaults {
             }
         }
     }
+    
+    var appUnit: String? {
+        get {
+            return value(forKey: .appUnit) as? String
+        }
+        set {
+            set(newValue, forKey: .appUnit)
+            synchronize()
+        }
+    }
 }
 
 extension String {
     static let currentLocation     = "currentLocationForecast"
+    static let appUnit             = "appUnit"
 }

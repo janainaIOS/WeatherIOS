@@ -19,7 +19,7 @@ class TodayWeatherCollectionCell: UICollectionViewCell {
         if let weatherCondition = WeatherCondition(rawValue: model.descriptn.first?.main ?? "") {
             iconImageView.image = UIImage(systemName: weatherCondition.iconName)
         }
-        
-        tempLabel.text = String(format: "%.0f", model.temparature?.temp ?? 0) + "°"
+        let currentTemp = appUnit == .metric ? model.temparature?.temp ?? 0 : model.temparature?.temp?.celsiusToFahrenheit()
+        tempLabel.text = String(format: "%.0f", currentTemp ?? 0) + "°"
     }
 }

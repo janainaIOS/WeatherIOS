@@ -17,3 +17,7 @@ let screenHeight = UIScreen.main.bounds.height
 
 /// Api key from http://openweathermap.org
 let weatherAPIKey = "0eb7823070850e15a565960395a50c69"
+
+// MARK: - Units
+///Units for temparature and pressure
+var appUnit: Unit     = .metric

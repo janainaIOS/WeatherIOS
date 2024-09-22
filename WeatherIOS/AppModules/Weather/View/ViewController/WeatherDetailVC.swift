@@ -88,35 +88,43 @@ class WeatherDetailVC: UIViewController {
         bgImageView.image = isDayTime(sunrise: forecast?.city.sunrise ?? 0, sunset: forecast?.city.sunset ?? 0) ? .bgMorning : .bgNight
         
         cityNameLabel.text = forecast?.city.name
-        currentTempLabel.text = String(format: "%.0f", forecast?.list.first?.temparature?.temp ?? 0) + "°"
+        let currentTemp = appUnit == .metric ? forecast?.list.first?.temparature?.temp ?? 0 : forecast?.list.first?.temparature?.temp?.celsiusToFahrenheit()
+        currentTempLabel.text = String(format: "%.0f", currentTemp ?? 0) + "°"
         descriptnLabel.text = forecast?.list.first?.descriptn.first?.main
-        lowHighTempLabel.text = "H:\(String(format: "%.0f", forecast?.list.first?.temparature?.maxTemp ?? 0))°   L:\(String(format: "%.0f", forecast?.list.first?.temparature?.minTemp ?? 0))°"
-        descriptnDetailLabel.text = "\(descriptnLabel.text ?? "") conditions will continue for the rest of the day. Wind gusts are up to \(forecast?.list.first?.wind?.speed ?? 0) km/h."
-        sunriseValueLabel.text = forecast?.city.sunrise.formatDateString(outputFormat: .hmma)
-        sunsetValueLabel.text = "Sunset: " + (forecast?.city.sunset.formatDateString(outputFormat: .hmma) ?? "")
+        let maxTemp = appUnit == .metric ? forecast?.list.first?.temparature?.maxTemp ?? 0 : forecast?.list.first?.temparature?.maxTemp?.celsiusToFahrenheit()
+        let minTemp = appUnit == .metric ? forecast?.list.first?.temparature?.minTemp ?? 0 : forecast?.list.first?.temparature?.minTemp?.celsiusToFahrenheit()
+        lowHighTempLabel.text = "H:\(String(format: "%.0f", maxTemp ?? 0))°   L:\(String(format: "%.0f", minTemp ?? 0))°"
+        descriptnDetailLabel.text = "\(descriptnLabel.text ?? "") conditions will continue for the rest of the day. Wind gusts are up to \(forecast?.list.first?.wind?.speed ?? 0) m/s."
+        sunriseValueLabel.text = forecast?.city.sunrise.formatDateString(outputFormat: .hmma, timeZone: forecast?.city.timezone ?? 0)
+        sunsetValueLabel.text = "Sunset: " + (forecast?.city.sunset.formatDateString(outputFormat: .hmma, timeZone: forecast?.city.timezone ?? 0) ?? "")
         humidityValueLabel.text = "\(String(format: "%.0f", forecast?.list.first?.temparature?.humidity ?? 0))%"
-        pressureValueLabel.text = "\(String(format: "%.0f", forecast?.list.first?.temparature?.pressure ?? 0)) mb"
-        windValueLabel.text = "\(String(format: "%.0f", forecast?.list.first?.wind?.speed ?? 0)) km/h"
+        pressureValueLabel.text = "\(String(format: "%.0f", forecast?.list.first?.temparature?.pressure ?? 0)) hPa"
+        windValueLabel.text = "\(String(format: "%.0f", forecast?.list.first?.wind?.speed ?? 0)) m/s"
        
         //sunrise half circle view configuration
-        let sunriseTime = forecast?.city.sunrise.formatDate() ?? Date()
-        let sunsetTime = forecast?.city.sunset.formatDate() ?? Date()
-      
-        let totalDuration = sunsetTime.timeIntervalSince(sunriseTime)
-        let elapsedDuration = Date().timeIntervalSince(sunriseTime)
-        let progress = CGFloat(elapsedDuration / totalDuration)
-        sunriseView.setProgress(progress: progress, animated: true)
-        sunriseView.orientation = .bottom
-        sunriseTimeLabel.text = forecast?.city.sunrise.formatDateString(outputFormat: .hmma)
-        sunsetTimeLabel.text = forecast?.city.sunset.formatDateString(outputFormat: .hmma)
-        
+        if let timeZone = TimeZone(secondsFromGMT: forecast?.city.timezone ?? 0) {
+            let sunriseTime = forecast?.city.sunrise.formatDate() ?? Date()
+            let sunsetTime = forecast?.city.sunset.formatDate() ?? Date()
+            
+            let totalDuration = sunsetTime.timeIntervalSince(sunriseTime)
+            if let currentDate = Date().formatLocationTimeZone(locationTimeZone: timeZone) {
+                let elapsedDuration = currentDate.timeIntervalSince(sunriseTime)
+                let progress = max(0.0, min(CGFloat(elapsedDuration / totalDuration), 1.0))
+                sunriseView.setProgress(progress: progress, animated: true)
+                sunriseView.orientation = .bottom
+            }
+            sunriseTimeLabel.text = forecast?.city.sunrise.formatDateString(outputFormat: .hmma, timeZone: forecast?.city.timezone ?? 0)
+            sunsetTimeLabel.text = forecast?.city.sunset.formatDateString(outputFormat: .hmma, timeZone: forecast?.city.timezone ?? 0)
+        }
         
         /// fetch today's forecast by date filter
-    todayWeatherArray = viewModel.getTodayForecasts(from: forecast?.list ?? [])
+        if let timeZone = TimeZone(secondsFromGMT: forecast?.city.timezone ?? 0) {
+            todayWeatherArray = viewModel.getTodayForecasts(from: forecast?.list ?? [], timeZone: timeZone)
+        }
         todayWeatherCollectionView.reloadData()
         
         /// fetch weather of each day
-    weeklyWeatherArray = viewModel.getFirstWeatherForEachDate(from: forecast?.list ?? [])
+        weeklyWeatherArray = viewModel.getFirstWeatherForEachDate(from: forecast?.list ?? [], timezone: forecast?.city.timezone ?? 0)
         weeklyWeatherTableview.reloadData()
     }
     

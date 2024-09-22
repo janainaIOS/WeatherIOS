@@ -47,7 +47,7 @@ extension ForecastRequest: NetworkRequest {
         }
         
         /*
-         return BaseURL.openweather.url + EndPoints.forecast.rawValue + "/daily?lat=\(latitude)&lon=\(longitude)&cnt=\(dayCount)&appid=\(weatherAPIKey)&units=metric"
+         return BaseURL.openweather.url + EndPoints.forecast.rawValue + "/daily?lat=\(latitude)&lon=\(longitude)&cnt=\(dayCount)&appid=\(weatherAPIKey)&units=imperial"
          
          for 5 days showing  message = "Invalid API key.
          */

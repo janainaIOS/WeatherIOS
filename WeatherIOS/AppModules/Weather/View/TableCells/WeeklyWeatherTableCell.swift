@@ -31,7 +31,9 @@ class WeeklyWeatherTableCell: UITableViewCell {
             iconImageView.image = UIImage(systemName: weatherCondition.iconName)
         }
         
-        minTempLabel.text = String(format: "%.0f", model.temparature?.minTemp ?? 0) + "°"
-        maxTempLabel.text = String(format: "%.0f", model.temparature?.maxTemp ?? 0) + "°"
+        let minTemp = appUnit == .metric ? model.temparature?.minTemp ?? 0 : model.temparature?.minTemp?.celsiusToFahrenheit()
+        let maxTemp = appUnit == .metric ? model.temparature?.maxTemp ?? 0 : model.temparature?.maxTemp?.celsiusToFahrenheit()
+        minTempLabel.text = String(format: "%.0f", minTemp ?? 0) + "°"
+        maxTempLabel.text = String(format: "%.0f", maxTemp ?? 0) + "°"
     }
 }

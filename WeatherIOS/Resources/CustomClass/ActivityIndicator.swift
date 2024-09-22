@@ -21,7 +21,7 @@ class ActivityIndicator: NSObject {
         let activityframe = CGRect(x:view.frame.size.width/2-(size/2), y:view.frame.size.height/2-(size/2), width:size, height:size)
         self.activityIndicator = UIActivityIndicatorView(frame: activityframe)
         self.activityIndicator.color = .white
-        self.activityIndicator.style = .large
+        self.activityIndicator.style = .medium
     }
     
     required init?(coder aDecoder: NSCoder) {

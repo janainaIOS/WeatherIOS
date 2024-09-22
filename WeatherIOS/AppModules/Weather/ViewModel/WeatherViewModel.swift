@@ -66,51 +66,55 @@ final class WeatherViewModel {
         }
     }
     
-    /// Find the closest weather by comparing each weather date to the current date
-    func getClosestWeather(from forecast: Forecast) -> Weather? {
-        if forecast.list.isEmpty  {
-            print("No weather data available.")
-            return nil
-        } else {
-            
-            let currentDate = Date()
-            
-            // Find the closest weather by comparing each weather date to the current date
-            let closestWeather = forecast.list.min(by: { weather1, weather2 in
-                guard let date1 = weather1.dateTime.formatToDate(inputFormat: dateFormat.yyyyMMddHHmmss), let date2 = weather2.dateTime.formatToDate(inputFormat: dateFormat.yyyyMMddHHmmss) else {
-                    return false
-                }
-                // Compare which date is closer to the current date
-                return abs(date1.timeIntervalSince(currentDate)) < abs(date2.timeIntervalSince(currentDate))
-            })
-            
-            print("Closest Weather: \(closestWeather)")
-            return closestWeather
-        }
-    }
-    
-    
-    /// To filter today's forecast from a list of Weather objects
-    func getTodayForecasts(from forecasts: [Weather]) -> [Weather] {
-        // Get the current date and remove time components
+    /// To filter today's forecast from a list of Weather objects and sort by time proximity
+    func getTodayForecasts(from forecasts: [Weather], timeZone: TimeZone) -> [Weather] {
         let today = Calendar.current.startOfDay(for: Date())
         
-        // Filter forecasts to include only those with dates matching today
+        // Get the current time in the specified timezone
+        let currentTimeString = getCurrentTime(outputFormat: .yyyyMMddHHmmss, timeZone: timeZone)
+        
+    guard let currentTime = currentTimeString?.formatToDate(inputFormat: .yyyyMMddHHmmss) else {
+            return []
+        }
+        
+        // Filter forecasts to include only future forecasts for today
         let todayForecasts = forecasts.filter { forecast in
-            // Convert dateTime string to Date object
-            
             if let forecastDate = forecast.dateTime.formatToDate(inputFormat: .yyyyMMddHHmmss) {
-                // Check if the forecast date is the same as today
-                return Calendar.current.isDate(forecastDate, inSameDayAs: today)
+                // Check if the forecast date is the same as today and is in the future
+                return Calendar.current.isDate(forecastDate, inSameDayAs: today) && forecastDate > currentTime
             }
             return false
         }
         
-        return todayForecasts
+        // Sort forecasts by their proximity to the current time
+        let sortedForecasts = todayForecasts.sorted { forecast1, forecast2 in
+            guard let date1 = forecast1.dateTime.formatToDate(inputFormat: .yyyyMMddHHmmss),
+                  let date2 = forecast2.dateTime.formatToDate(inputFormat: .yyyyMMddHHmmss) else {
+                return false
+            }
+            
+            // Calculate the absolute time difference
+            return abs(date1.timeIntervalSince(currentTime)) < abs(date2.timeIntervalSince(currentTime))
+        }
+        
+        return sortedForecasts
     }
+
+    // Updated getCurrentTime function to accept a TimeZone parameter
+    func getCurrentTime(outputFormat: dateFormat, timeZone: TimeZone) -> String? {
+        let currentDate = Date()
+        
+        // Create a DateFormatter to format the date according to the specified timezone
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = timeZone
+        dateFormatter.dateFormat = outputFormat.rawValue
+        
+        return dateFormatter.string(from: currentDate)
+    }
+
     
     // To get the first weather forecast for each unique date
-    func getFirstWeatherForEachDate(from forecasts: [Weather]) -> [Weather] {
+    func getFirstWeatherForEachDate(from forecasts: [Weather], timezone: Int) -> [Weather] {
         
         var firstWeatherByDate: [String: Weather] = [:]
         

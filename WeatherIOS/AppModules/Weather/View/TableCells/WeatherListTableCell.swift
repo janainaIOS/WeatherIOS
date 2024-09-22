@@ -31,9 +31,12 @@ class WeatherListTableCell: UITableViewCell {
         //get current time using timezone
         dateLabel.text = model.isHome ? "My Location • 🏠︎ Home" : model.city.timezone.getCurrentTime(outputFormat: .hmma)
         descriptnLabel.text = model.list.first?.descriptn.first?.main ?? ""
-        // dateLabel.text = model.dateTime.formatDate(inputFormat: .yyyyMMddHHmmss, outputFormat: .eee, today: true)
-        currentTempLabel.text = String(format: "%.0f", model.list.first?.temparature?.temp ?? 0) + "°"
-        lowHighTempLabel.text = "H:\(String(format: "%.0f", model.list.first?.temparature?.maxTemp ?? 0))°  L:\(String(format: "%.0f", model.list.first?.temparature?.minTemp ?? 0))°"
+        let currentTemp = appUnit == .metric ? model.list.first?.temparature?.temp ?? 0 : model.list.first?.temparature?.temp?.celsiusToFahrenheit()
+        currentTempLabel.text = String(format: "%.0f", currentTemp ?? 0) + "°"
+        let maxTemp = appUnit == .metric ? model.list.first?.temparature?.maxTemp ?? 0 : model.list.first?.temparature?.maxTemp?.celsiusToFahrenheit()
+        let minTemp = appUnit == .metric ? model.list.first?.temparature?.minTemp ?? 0 : model.list.first?.temparature?.minTemp?.celsiusToFahrenheit()
+        lowHighTempLabel.text = "H:\(String(format: "%.0f", maxTemp ?? 0))°  L:\(String(format: "%.0f", minTemp ?? 0))°"
     }
     
 }
+

@@ -15,4 +15,21 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func formatLocationTimeZone(locationTimeZone: TimeZone) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = locationTimeZone
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        // Convert the current date to a string in the location's time zone
+        let currentTimeString = dateFormatter.string(from: Date())
+        
+        
+        guard let localCurrentTime = dateFormatter.date(from: currentTimeString) else {
+            print("Error converting current time to the location's timezone")
+            return nil
+        }
+        
+        return localCurrentTime
+    }
+
 }

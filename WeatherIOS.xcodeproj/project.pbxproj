@@ -21,7 +21,6 @@
 		A7A7639D2C9D854C00AB4D3A /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A7639C2C9D854C00AB4D3A /* Environment.swift */; };
 		A7A763A12C9D857200AB4D3A /* NetworkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A763A02C9D857200AB4D3A /* NetworkRequest.swift */; };
 		A7A763A32C9D857E00AB4D3A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A763A22C9D857E00AB4D3A /* NetworkManager.swift */; };
-		A7A763A72C9D860300AB4D3A /* IQKeyboardManagerSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A7A763A62C9D860300AB4D3A /* IQKeyboardManagerSwift */; };
 		A7A763AA2C9D861300AB4D3A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = A7A763A92C9D861300AB4D3A /* Alamofire */; };
 		A7A763B02C9D87C900AB4D3A /* AlertMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A763AF2C9D87C900AB4D3A /* AlertMessages.swift */; };
 		A7A763B32C9D882000AB4D3A /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7A763B22C9D882000AB4D3A /* Toast.swift */; };
@@ -41,6 +40,8 @@
 		A7ACF4E92C9EFC4600C01D6A /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ACF4E82C9EFC4600C01D6A /* UserDefaults+Extensions.swift */; };
 		A7ACF4EB2C9EFDEF00C01D6A /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ACF4EA2C9EFDEF00C01D6A /* Array+Extensions.swift */; };
 		A7ACF4ED2C9F219700C01D6A /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7ACF4EC2C9F219700C01D6A /* Date+Extensions.swift */; };
+		A7B096B32CA0438800C6EF5A /* UnitTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B096B22CA0438800C6EF5A /* UnitTableCell.swift */; };
+		A7B096B52CA043A200C6EF5A /* UnitsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B096B42CA043A200C6EF5A /* UnitsVC.swift */; };
 		A7D422F82C9F4E11009D1D52 /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7D422F72C9F4E11009D1D52 /* Int+Extensions.swift */; };
 		A7EABC2F2C9FCE3B00BE84C7 /* DBWeather+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EABC2D2C9FCE3B00BE84C7 /* DBWeather+CoreDataClass.swift */; };
 		A7EABC302C9FCE3B00BE84C7 /* DBWeather+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7EABC2E2C9FCE3B00BE84C7 /* DBWeather+CoreDataProperties.swift */; };
@@ -122,6 +123,8 @@
 		A7ACF4E82C9EFC4600C01D6A /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		A7ACF4EA2C9EFDEF00C01D6A /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		A7ACF4EC2C9F219700C01D6A /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
+		A7B096B22CA0438800C6EF5A /* UnitTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTableCell.swift; sourceTree = "<group>"; };
+		A7B096B42CA043A200C6EF5A /* UnitsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitsVC.swift; sourceTree = "<group>"; };
 		A7D422F72C9F4E11009D1D52 /* Int+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
 		A7EABC2D2C9FCE3B00BE84C7 /* DBWeather+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWeather+CoreDataClass.swift"; sourceTree = "<group>"; };
 		A7EABC2E2C9FCE3B00BE84C7 /* DBWeather+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DBWeather+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -154,7 +157,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7A763A72C9D860300AB4D3A /* IQKeyboardManagerSwift in Frameworks */,
 				A7A763AA2C9D861300AB4D3A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,6 +308,7 @@
 				A7FBDFE02C9D980E00A219DE /* WeatherListVC.swift */,
 				A7FBDFE42C9D9C5F00A219DE /* SearchLocationtVC.swift */,
 				A7FBDFE22C9D982F00A219DE /* WeatherDetailVC.swift */,
+				A7B096B42CA043A200C6EF5A /* UnitsVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				A7FBDFE72C9DA4ED00A219DE /* LocationTableCell.swift */,
 				A7A95D6D2C9F272E00673022 /* WeeklyWeatherTableCell.swift */,
 				A7FBDFE92C9DA50200A219DE /* WeatherListTableCell.swift */,
+				A7B096B22CA0438800C6EF5A /* UnitTableCell.swift */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -428,7 +432,6 @@
 			);
 			name = WeatherIOS;
 			packageProductDependencies = (
-				A7A763A62C9D860300AB4D3A /* IQKeyboardManagerSwift */,
 				A7A763A92C9D861300AB4D3A /* Alamofire */,
 			);
 			productName = WeatherIOS;
@@ -504,7 +507,6 @@
 			);
 			mainGroup = A7A763572C9D83CD00AB4D3A;
 			packageReferences = (
-				A7A763A52C9D860300AB4D3A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */,
 				A7A763A82C9D861300AB4D3A /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = A7A763612C9D83CD00AB4D3A /* Products */;
@@ -569,6 +571,7 @@
 				A7A763B02C9D87C900AB4D3A /* AlertMessages.swift in Sources */,
 				A7ACF4E52C9EC0A800C01D6A /* String+Extensions.swift in Sources */,
 				A7FBE00A2C9DCBBA00A219DE /* RemoteWeatherService.swift in Sources */,
+				A7B096B32CA0438800C6EF5A /* UnitTableCell.swift in Sources */,
 				A7EABC382C9FE09100BE84C7 /* CircleProgrssBar.swift in Sources */,
 				A7FBDFE82C9DA4ED00A219DE /* LocationTableCell.swift in Sources */,
 				A7FBE0042C9DBF9D00A219DE /* WeatherViewModel.swift in Sources */,
@@ -594,6 +597,7 @@
 				A7EABC342C9FCE4A00BE84C7 /* DBForecast+CoreDataProperties.swift in Sources */,
 				A7FBE0082C9DCBAB00A219DE /* WeatherService.swift in Sources */,
 				A7A763B32C9D882000AB4D3A /* Toast.swift in Sources */,
+				A7B096B52CA043A200C6EF5A /* UnitsVC.swift in Sources */,
 				A7FBDFEC2C9DA7B000A219DE /* UITableView+Extensions.swift in Sources */,
 				A7ACF4ED2C9F219700C01D6A /* Date+Extensions.swift in Sources */,
 				A7A763992C9D84DF00AB4D3A /* BaseURL.swift in Sources */,
@@ -957,14 +961,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		A7A763A52C9D860300AB4D3A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/hackiftekhar/IQKeyboardManager.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.1.1;
-			};
-		};
 		A7A763A82C9D861300AB4D3A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -976,11 +972,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		A7A763A62C9D860300AB4D3A /* IQKeyboardManagerSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A7A763A52C9D860300AB4D3A /* XCRemoteSwiftPackageReference "IQKeyboardManager" */;
-			productName = IQKeyboardManagerSwift;
-		};
 		A7A763A92C9D861300AB4D3A /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A7A763A82C9D861300AB4D3A /* XCRemoteSwiftPackageReference "Alamofire" */;

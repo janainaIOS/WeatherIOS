@@ -26,8 +26,14 @@ class WeatherListVC: UIViewController, UITextFieldDelegate {
     /// Initial settings
     private func configure() {
         activityIndicator = ActivityIndicator(view: self.view)
+        //Unit setting
+        if let getAppUnit = UserDefaults.standard.appUnit, getAppUnit != "" {
+            appUnit = Unit(rawValue: getAppUnit) ?? .metric
+        }
+        //Location
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
+        //Fetch list
         getAllDBForecasts(update: true)
     }
     
@@ -140,6 +146,12 @@ class WeatherListVC: UIViewController, UITextFieldDelegate {
             vc.delegate = self
         }
     }
+                           
+   @IBAction func settingButtonTapped(_ sender: UIButton) {
+       self.presentSheetViewController(UnitsVC.self, storyboard: Storyboards.main, height: 230) { vc in
+           vc.delegate = self
+       }
+    }
     
 }
 
@@ -206,14 +218,12 @@ extension WeatherListVC: UITableViewDelegate {
 extension WeatherListVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         // fetch city name using coordinates
-        print("stopUpdatingLocation")
         locationManager.stopUpdatingLocation()
         
         if !currentLocFetched {
             currentLocFetched = true
             locations.last?.fetchCityAndCountry { city, country, error in
                 guard let city = city, let country = country, error == nil else { return }
-                print(city + ", " + country)
                 
                 ///get weather forecast details
                 self.getWeatherForecastOfCurrentLocation(cityName: city)
@@ -222,17 +232,14 @@ extension WeatherListVC: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        print("didChangeAuthorization")
         checkLocation()
     }
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        print("locationManagerDidChangeAuthorization")
         checkLocation()
     }
     
     /// Check app's Location access permission
     func checkLocation()  {
-        print("checkLocation")
         switch self.locationManager.authorizationStatus {
         case .notDetermined:
             // Request when-in-use authorization initially
@@ -256,7 +263,6 @@ extension WeatherListVC: CLLocationManagerDelegate {
     
     /// Start fetching current location
     func enableMyWhenInUseFeatures() {
-        print("enableMyWhenInUseFeatures")
         locationManager.startUpdatingLocation()
     }
 }
@@ -281,5 +287,12 @@ extension WeatherListVC: SearchLocationtVCDelegate {
 extension WeatherListVC: WeatherDetailVCDelegate {
     func newLocationAdded() {
         getAllDBForecasts(update: true)
+    }
+}
+
+//UnitsVCDelegate Delegates
+extension WeatherListVC: UnitsVCDelegate {
+    func itemSelected() {
+        listTableView.reloadData()
     }
 }
